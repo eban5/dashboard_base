@@ -10,11 +10,11 @@ const { SubMenu } = Menu;
 
 const UserAvatar = props => {
 	const { user, size } = props;
-	let width = size === "small" ? "100px" : "500px";
+	let width = size === "small" ? "81%" : "100%";
 
 	return (
 		<div className="user_avatar">
-			<div style={{ width: "80%", display: "block", margin: "0 auto" }}>
+			<div style={{ width: width, display: "block", margin: "0 auto" }}>
 				<Avatar />
 				<div style={{ color: "white", margin: "16px 0" }}>
 					<strong> {user}</strong>
@@ -78,7 +78,7 @@ function App() {
 					</Menu>
 				</Sider>
 				<Layout>
-					<Header style={{ background: "#fff", padding: 0 }} />
+					<Header style={{ padding: 0 }} />
 					<Content style={{ margin: "0 16px" }}>
 						<Breadcrumb style={{ margin: "16px 0" }}>
 							<Breadcrumb.Item>User</Breadcrumb.Item>
