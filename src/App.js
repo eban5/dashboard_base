@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Avatar } from "./avatar.js";
+import { RPMChart } from "./Chart";
 import "antd/dist/antd.css";
 import "./App.css";
 
-import { Layout, Menu, Breadcrumb, Icon } from "antd";
+import { Layout, Menu, Icon } from "antd";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-const UserAvatar = props => {
+const UserAvatar = (props) => {
 	const { user, size } = props;
 	let width = size === "small" ? "81%" : "100%";
 
@@ -29,7 +30,7 @@ function App() {
 	const user = "Joe Cool";
 	const copyRightYear = new Date().getFullYear();
 
-	const onCollapse = collapsed => {
+	const onCollapse = (collapsed) => {
 		console.log(collapsed);
 		setCollapsed(collapsed);
 	};
@@ -38,7 +39,7 @@ function App() {
 		<div className="App">
 			<Layout style={{ minHeight: "100vh" }}>
 				<Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-					<UserAvatar size="small" user={user} />
+					{/* <UserAvatar size="small" user={user} /> */}
 					<Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
 						<Menu.Item key="1">
 							<Icon type="pie-chart" />
@@ -80,13 +81,7 @@ function App() {
 				<Layout>
 					<Header style={{ padding: 0 }} />
 					<Content style={{ margin: "0 16px" }}>
-						<Breadcrumb style={{ margin: "16px 0" }}>
-							<Breadcrumb.Item>User</Breadcrumb.Item>
-							<Breadcrumb.Item>Bill</Breadcrumb.Item>
-						</Breadcrumb>
-						<div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
-							{user}'s Profile
-						</div>
+						<RPMChart></RPMChart>
 					</Content>
 					<Footer style={{ textAlign: "center" }}>
 						Esteban Amas ©{copyRightYear}. Made with Ant Design.
