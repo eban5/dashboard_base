@@ -68,10 +68,18 @@ export function RPMChart(props) {
 							fontSize: 17,
 							fontFamily: "Palatino",
 						},
+
 						legend: {
 							display: true,
-							position: "right",
+							position: "bottom",
 							fontFamily: "Palatino",
+							fullWidth: false,
+
+							labels: {
+								fontFamily: "Palatino",
+								padding: 20,
+								boxWidth: 20,
+							},
 						},
 						scales: {
 							yAxes: [
