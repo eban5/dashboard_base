@@ -1,20 +1,47 @@
 import React from "react";
-import { results, results2 } from "./data";
-import { Table } from "antd";
+import { Bar } from "react-chartjs-2";
+import { results } from "./data";
+
+//#588da8
+//#ccafaf
+// #e58a8a
+// #d8345f
 
 const problemNames = ["Basic Problems D", "Basic Problems E", "Test Problems D", "Test Problems E"];
 
+const columns = [
+	{
+		title: "Problem",
+		dataIndex: "problemName",
+		key: "problemName",
+	},
+	{
+		title: "Correct",
+		dataIndex: "correct",
+		key: "correct",
+	},
+	{
+		title: "Incorrect",
+		dataIndex: "incorrect",
+		key: "incorrect",
+	},
+];
+
 export function loadResults(data) {
-	return Object.entries(data)
-		.map((item, key) => {
+	console.log(data);
+
+	let parsed = data.map((k, v) => {
+		Object.entries(k).map((item, key) => {
 			return {
 				key: key,
 				problemName: item[0],
 				correct: item[1]["Correct"],
 				incorrect: item[1]["Incorrect"],
 			};
-		})
-		.sort();
+		});
+	});
+
+	console.log(parsed);
 }
 
 export function parseResults(data) {
@@ -30,60 +57,71 @@ export function parseResults(data) {
 }
 
 export function getProblemNameResults(data, problemName) {
-	// dig through "data" arrays and return an array of problemName's correct and incorrect results
-	let matches = [];
+	// dig through "data" arrays and return object for ChartJS
 
-	let correct = data
-		.map((i) => i.filter((v) => v.problemName === problemName)[0])
-		.filter((i) => {
-			if (i.problemName === problemName) {
-				return i.correct;
-			}
-		});
+	let subset = data.map((i) => i.filter((v) => v.problemName === problemName)[0]);
 
-	let incorrect = data
-		.map((i) => i.filter((v) => v.problemName === problemName)[0])
-		.filter((i) => {
-			if (i.problemName === problemName) {
-				return i.incorrect;
-			}
-		});
+	let correct = subset.map((k) => k.correct);
+	let incorrect = subset.map((k) => k.incorrect);
 
-	return correct, incorrect;
+	return {
+		problemName: problemName,
+		correct: correct,
+		incorrect: incorrect,
+	};
 }
 
 export const RPMChart = () => {
-	let displayData1 = loadResults(results).sort();
-	let displayData2 = loadResults(results2).sort();
-	let processData = [displayData1, displayData2];
+	let submissions = loadResults(results);
+	console.log(submissions);
 
-	// let problemD = getProblemNameResults(processData, "Basic Problems D");
+	let basicD = getProblemNameResults(submissions, "Basic Problems D");
+	let basicE = getProblemNameResults(submissions, "Basic Problems E");
+	let challengeD = getProblemNameResults(submissions, "Challenge Problems D");
+	let challengeE = getProblemNameResults(submissions, "Challenge Problems E");
 
-	let res1 = parseResults(displayData1);
-	let res2 = parseResults(displayData2);
+	let chartData = [basicD, basicE, challengeD, challengeE];
 
-	const columns = [
-		{
-			title: "Problem",
-			dataIndex: "problemName",
-			key: "problemName",
-		},
-		{
-			title: "Correct",
-			dataIndex: "correct",
-			key: "correct",
-		},
-		{
-			title: "Incorrect",
-			dataIndex: "incorrect",
-			key: "incorrect",
-		},
-	];
+	let displayData = chartData.map((dataset, key) => {
+		let datasetState = {
+			labels: ["1", "2"], // , "3", "4", "5", "6", "7", "8", "9", "10"],
+			title: dataset.problemName,
+			datasets: [
+				{
+					label: "Correct",
+					backgroundColor: "rgba(88, 141, 168,0.5)", // #588da8
+					borderColor: "rgba(88, 141, 168,1)",
+					borderWidth: 1,
+					data: dataset.correct,
+				},
+				{
+					label: "Incorrect",
+					backgroundColor: "rgba(229, 138, 138, 0.5)",
+					borderColor: "rgba(229, 138, 138, 1)",
+					borderWidth: 1,
+					data: dataset.incorrect,
+				},
+			],
+		};
 
-	return (
-		<div>
-			<Table dataSource={displayData1} columns={columns} />
-			<Table dataSource={displayData2} columns={columns} />
-		</div>
-	);
+		return (
+			<Bar
+				key={key}
+				data={datasetState}
+				options={{
+					title: {
+						display: true,
+						text: `${datasetState.title} Scores`,
+						fontSize: 17,
+					},
+					legend: {
+						display: true,
+						position: "right",
+					},
+				}}
+			/>
+		);
+	});
+
+	return <div>{displayData}</div>;
 };
