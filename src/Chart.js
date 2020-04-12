@@ -1,127 +1,98 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
-import { results } from "./data";
+import { getProblemNames, getProblemNameResults } from "./utils";
 
-//#588da8
-//#ccafaf
-// #e58a8a
-// #d8345f
+export function RPMChart(props) {
+	const { results } = props;
+	const chartRef = React.createRef();
 
-const problemNames = ["Basic Problems D", "Basic Problems E", "Test Problems D", "Test Problems E"];
+	let problemNames = getProblemNames(results);
 
-const columns = [
-	{
-		title: "Problem",
-		dataIndex: "problemName",
-		key: "problemName",
-	},
-	{
-		title: "Correct",
-		dataIndex: "correct",
-		key: "correct",
-	},
-	{
-		title: "Incorrect",
-		dataIndex: "incorrect",
-		key: "incorrect",
-	},
-];
+	let chartData = [];
+	for (let name in problemNames) {
+		chartData.push(getProblemNameResults(results, problemNames[name]));
+	}
 
-export function loadResults(data) {
-	console.log(data);
+	let datasetState = {
+		labels: ["1", "2"],
+		// , "3", "4", "5", "6", "7", "8", "9", "10"],
+		title: "Correct Results across Submissions",
+		datasets: problemNames.map((i, key) => {
+			let r = Math.floor(Math.random() * 256);
+			let g = Math.floor(Math.random() * 256);
+			let b = Math.floor(Math.random() * 256);
 
-	let parsed = data.map((k, v) => {
-		Object.entries(k).map((item, key) => {
 			return {
-				key: key,
-				problemName: item[0],
-				correct: item[1]["Correct"],
-				incorrect: item[1]["Incorrect"],
+				label: i,
+				backgroundColor: `rgba(${r}, ${g}, ${b}, 0.25)`,
+				borderColor: `rgba(${r}, ${g}, ${b}, 0.75)`,
+				borderWidth: 1,
+				data: chartData[key].correct,
 			};
-		});
-	});
-
-	console.log(parsed);
-}
-
-export function parseResults(data) {
-	return data.map((i, key) => {
-		return (
-			<div key={key}>
-				<h3>{i.problemName}</h3>
-				<p>Correct: {i.correct}</p>
-				<p>Incorrect: {i.incorrect}</p>
-			</div>
-		);
-	});
-}
-
-export function getProblemNameResults(data, problemName) {
-	// dig through "data" arrays and return object for ChartJS
-
-	let subset = data.map((i) => i.filter((v) => v.problemName === problemName)[0]);
-
-	let correct = subset.map((k) => k.correct);
-	let incorrect = subset.map((k) => k.incorrect);
-
-	return {
-		problemName: problemName,
-		correct: correct,
-		incorrect: incorrect,
+		}),
 	};
-}
 
-export const RPMChart = () => {
-	let submissions = loadResults(results);
-	console.log(submissions);
+	const downloadChart = () => {
+		// get image of canvas element
+		let url_base64 = chartRef.current.chartInstance.toBase64Image();
+		let a = document.getElementById("download");
+		a.href = url_base64;
+	};
 
-	let basicD = getProblemNameResults(submissions, "Basic Problems D");
-	let basicE = getProblemNameResults(submissions, "Basic Problems E");
-	let challengeD = getProblemNameResults(submissions, "Challenge Problems D");
-	let challengeE = getProblemNameResults(submissions, "Challenge Problems E");
-
-	let chartData = [basicD, basicE, challengeD, challengeE];
-
-	let displayData = chartData.map((dataset, key) => {
-		let datasetState = {
-			labels: ["1", "2"], // , "3", "4", "5", "6", "7", "8", "9", "10"],
-			title: dataset.problemName,
-			datasets: [
-				{
-					label: "Correct",
-					backgroundColor: "rgba(88, 141, 168,0.5)", // #588da8
-					borderColor: "rgba(88, 141, 168,1)",
-					borderWidth: 1,
-					data: dataset.correct,
-				},
-				{
-					label: "Incorrect",
-					backgroundColor: "rgba(229, 138, 138, 0.5)",
-					borderColor: "rgba(229, 138, 138, 1)",
-					borderWidth: 1,
-					data: dataset.incorrect,
-				},
-			],
-		};
-
-		return (
+	return (
+		<div>
+			<a
+				onClick={() => {
+					downloadChart();
+				}}
+				id="download"
+				download="ChartImage.png"
+				href=""
+				title="Download Chart">
+				Download
+			</a>
 			<Bar
-				key={key}
+				ref={chartRef}
 				data={datasetState}
 				options={{
 					title: {
 						display: true,
 						text: `${datasetState.title} Scores`,
 						fontSize: 17,
+						fontFamily: "Palatino",
 					},
 					legend: {
 						display: true,
 						position: "right",
+						fontFamily: "Palatino",
+					},
+					scales: {
+						yAxes: [
+							{
+								scaleLabel: {
+									display: true,
+									labelString: "# Correct",
+									fontFamily: "Palatino",
+								},
+								ticks: {
+									fontFamily: "Palatino",
+									suggestedMin: 0,
+									suggestedMax: 12,
+								},
+							},
+						],
+						xAxes: [
+							{
+								scaleLabel: {
+									display: true,
+									labelString: "Submission",
+									fontFamily: "Palatino",
+								},
+							},
+						],
 					},
 				}}
 			/>
-		);
-	});
-
-	return <div>{displayData}</div>;
-};
+		</div>
+	);
+}

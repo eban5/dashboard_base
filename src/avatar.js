@@ -47,3 +47,19 @@ export const Avatar = () => {
 		</svg>
 	);
 };
+
+export const UserAvatar = (props) => {
+	const { user, size } = props;
+	let width = size === "small" ? "81%" : "100%";
+
+	return (
+		<div className="user_avatar">
+			<div style={{ width: width, display: "block", margin: "0 auto" }}>
+				<Avatar />
+				<div style={{ color: "white", margin: "16px 0" }}>
+					<strong> {user}</strong>
+				</div>
+			</div>
+		</div>
+	);
+};
