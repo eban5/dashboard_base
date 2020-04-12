@@ -21,15 +21,14 @@ const columns = [
 ];
 
 export const DataTable = (props) => {
-	const { results } = props;
+	const { results, problemType } = props;
 
-	let problemNames = getProblemNames(results);
+	let problemNames = getProblemNames(results, problemType);
 	let chartData = [];
 
 	for (let name in problemNames) {
 		chartData.push(getProblemNameResults(results, problemNames[name]));
 	}
-	console.log(chartData);
 
 	return (
 		<div>

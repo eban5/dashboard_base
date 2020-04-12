@@ -14,8 +14,16 @@ export function getProblemNameResults(data, problemName) {
 	};
 }
 
-export function getProblemNames(data) {
+export function getProblemNames(data, type) {
 	if (data.length > 0) {
-		return Object.keys(data[0]).sort();
+		if (type === "Basic") {
+			return Object.keys(data[0])
+				.sort()
+				.filter((item) => item.indexOf("Basic") !== -1);
+		} else if (type === "Challenge") {
+			return Object.keys(data[0])
+				.sort()
+				.filter((item) => item.indexOf("Challenge") !== -1);
+		}
 	}
 }

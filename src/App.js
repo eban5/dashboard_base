@@ -31,7 +31,8 @@ function App() {
 						<h2 style={{ color: "white" }}>KBAI Project 3</h2>
 					</Header>
 					<Content style={{ margin: "0 16px" }}>
-						<RPMChart results={results} />
+						<RPMChart results={results} problemType={"Basic"} />
+						<RPMChart results={results} problemType={"Challenge"} />
 
 						{/* <DataTable results={results} /> */}
 					</Content>

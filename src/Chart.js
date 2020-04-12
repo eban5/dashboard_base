@@ -2,13 +2,12 @@ import React from "react";
 import { Bar } from "react-chartjs-2";
 import { getProblemNames, getProblemNameResults } from "./utils";
 import { Button } from "antd";
-import { DownloadOutlined } from "@ant-design/icons";
 
 export function RPMChart(props) {
-	const { results } = props;
+	const { results, problemType } = props;
 	const chartRef = React.createRef();
 
-	let problemNames = getProblemNames(results);
+	let problemNames = getProblemNames(results, problemType);
 
 	let chartData = [];
 	for (let name in problemNames) {
@@ -18,7 +17,7 @@ export function RPMChart(props) {
 	let datasetState = {
 		labels: ["1", "2"],
 		// , "3", "4", "5", "6", "7", "8", "9", "10"],
-		title: "Correct Results across Submissions",
+		title: `${problemType} Correct Results across Submissions`,
 		datasets: problemNames.map((i, key) => {
 			let r = Math.floor(Math.random() * 256);
 			let g = Math.floor(Math.random() * 256);
