@@ -82,6 +82,7 @@ export function RPMChart(props) {
 						scales: {
 							yAxes: [
 								{
+									id: "y-axis-0",
 									scaleLabel: {
 										display: true,
 										labelString: "# Correct",
@@ -100,6 +101,22 @@ export function RPMChart(props) {
 										display: true,
 										labelString: "Submission",
 										fontFamily: "Palatino",
+									},
+								},
+							],
+						},
+						annotation: {
+							annotations: [
+								{
+									type: "line",
+									mode: "horizontal",
+									scaleID: "y-axis-0",
+									value: 7,
+									borderColor: "rgb(216, 52, 95)",
+									borderWidth: 4,
+									label: {
+										enabled: true,
+										content: "Threshold",
 									},
 								},
 							],
