@@ -43,6 +43,25 @@ export function getProblemNames(data, type) {
 	}
 }
 
+// #084177 rgb(8, 65, 119)
+// #fbc490 rgb(251, 196, 144)
+// #687466 rgb(104, 116, 102)
+// #cd8d7b rgb(205, 141, 123)
+
+export const setBkgColor = [
+	`rgba(8, 65, 119, 0.25)`,
+	`rgba(251, 196, 144, 0.25)`,
+	`rgba(104, 116, 102, 0.25)`,
+	`rgba(205, 141, 123, 0.25)`,
+];
+
+export const setBorderColor = [
+	`rgba(8, 65, 119, 0.75)`,
+	`rgba(251, 196, 144, 0.75)`,
+	`rgba(104, 116, 102, 0.75)`,
+	`rgba(205, 141, 123, 0.75)`,
+];
+
 export const generateXAxis = (nums) => {
 	let arrSubmissions = [...Array(nums.length).keys()];
 	for (let item in arrSubmissions) {

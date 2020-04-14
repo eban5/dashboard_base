@@ -1,6 +1,12 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
-import { getProblemNames, getProblemNameResults, generateXAxis } from "./utils";
+import {
+	getProblemNames,
+	getProblemNameResults,
+	generateXAxis,
+	setBkgColor,
+	setBorderColor,
+} from "./utils";
 import { Button } from "antd";
 
 export function RPMChart(props) {
@@ -18,14 +24,14 @@ export function RPMChart(props) {
 		labels: generateXAxis(results),
 		title: `${problemType} Correct Results across Submissions`,
 		datasets: problemNames.map((i, key) => {
-			let r = Math.floor(Math.random() * 256);
-			let g = Math.floor(Math.random() * 256);
-			let b = Math.floor(Math.random() * 256);
+			// get color to use for their bar fill
+			let bkgColor = setBkgColor[key];
+			let borderColor = setBorderColor[key];
 
 			return {
 				label: i,
-				backgroundColor: `rgba(${r}, ${g}, ${b}, 0.25)`,
-				borderColor: `rgba(${r}, ${g}, ${b}, 0.75)`,
+				backgroundColor: bkgColor,
+				borderColor: borderColor,
 				borderWidth: 1,
 				data: chartData[key].correct,
 			};
@@ -48,9 +54,9 @@ export function RPMChart(props) {
 							downloadChart();
 						}}
 						id="download"
-						download="ChartImage.png"
+						download={`${problemType.toLowerCase()}_chart.png`}
 						href=""
-						title="Download Chart">
+						title={`Download ${problemType} Chart`}>
 						Download
 					</a>
 				</Button>
@@ -62,7 +68,7 @@ export function RPMChart(props) {
 					options={{
 						title: {
 							display: true,
-							text: `${datasetState.title} Scores`,
+							text: `${datasetState.title}`,
 							fontSize: 17,
 							fontFamily: "Palatino",
 						},
@@ -115,7 +121,7 @@ export function RPMChart(props) {
 									borderColor: "rgb(216, 52, 95)",
 									borderWidth: 4,
 									label: {
-										enabled: true,
+										enabled: false,
 										content: "Threshold",
 									},
 								},
