@@ -1,6 +1,6 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
-import { getProblemNames, getProblemNameResults } from "./utils";
+import { getProblemNames, getProblemNameResults, generateXAxis } from "./utils";
 import { Button } from "antd";
 
 export function RPMChart(props) {
@@ -15,8 +15,7 @@ export function RPMChart(props) {
 	}
 
 	let datasetState = {
-		labels: ["1", "2"],
-		// , "3", "4", "5", "6", "7", "8", "9", "10"],
+		labels: generateXAxis(results),
 		title: `${problemType} Correct Results across Submissions`,
 		datasets: problemNames.map((i, key) => {
 			let r = Math.floor(Math.random() * 256);

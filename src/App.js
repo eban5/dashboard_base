@@ -32,6 +32,8 @@ function App() {
 					</Header>
 					<Content style={{ margin: "0 16px" }}>
 						<RPMChart results={results} problemType={"Basic"} />
+						<RPMChart results={results} problemType={"Test"} />
+						<RPMChart results={results} problemType={"Ravens"} />
 						<RPMChart results={results} problemType={"Challenge"} />
 
 						{/* <DataTable results={results} /> */}

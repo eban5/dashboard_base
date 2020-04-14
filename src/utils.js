@@ -16,14 +16,37 @@ export function getProblemNameResults(data, problemName) {
 
 export function getProblemNames(data, type) {
 	if (data.length > 0) {
-		if (type === "Basic") {
-			return Object.keys(data[0])
-				.sort()
-				.filter((item) => item.indexOf("Basic") !== -1);
-		} else if (type === "Challenge") {
-			return Object.keys(data[0])
-				.sort()
-				.filter((item) => item.indexOf("Challenge") !== -1);
+		switch (type) {
+			case "Basic":
+				return Object.keys(data[0])
+					.sort()
+					.filter((item) => item.indexOf("Basic") !== -1);
+
+			case "Test":
+				return Object.keys(data[0])
+					.sort()
+					.filter((item) => item.indexOf("Test") !== -1);
+
+			case "Challenge":
+				return Object.keys(data[0])
+					.sort()
+					.filter((item) => item.indexOf("Challenge") !== -1);
+
+			case "Ravens":
+				return Object.keys(data[0])
+					.sort()
+					.filter((item) => item.indexOf("Ravens") !== -1);
+
+			default:
+				throw new Error("Problem Type not recognized");
 		}
 	}
 }
+
+export const generateXAxis = (nums) => {
+	let arrSubmissions = [...Array(nums.length).keys()];
+	for (let item in arrSubmissions) {
+		arrSubmissions[item]++;
+	}
+	return arrSubmissions;
+};
