@@ -1,5 +1,5 @@
 import React from "react";
-import { Bar } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 import {
 	getProblemNames,
 	getProblemNameResults,
@@ -25,14 +25,14 @@ export function RPMChart(props) {
 		title: `${problemType} Correct Results across Submissions`,
 		datasets: problemNames.map((i, key) => {
 			// get color to use for their bar fill
-			let bkgColor = setBkgColor[key];
+			// let bkgColor = setBkgColor[key];
 			let borderColor = setBorderColor[key];
 
 			return {
 				label: i,
-				backgroundColor: bkgColor,
+				backgroundColor: "rgba(241, 242, 245, 0)",
 				borderColor: borderColor,
-				borderWidth: 1,
+				borderWidth: 5,
 				data: chartData[key].correct,
 			};
 		}),
@@ -62,7 +62,7 @@ export function RPMChart(props) {
 				</Button>
 			</div>
 			<div className="chart">
-				<Bar
+				<Line
 					ref={chartRef}
 					data={datasetState}
 					options={{
@@ -74,15 +74,13 @@ export function RPMChart(props) {
 						},
 
 						legend: {
-							display: true,
 							position: "bottom",
 							fontFamily: "Palatino",
-							fullWidth: false,
 
 							labels: {
 								fontFamily: "Palatino",
+								usePointStyle: true,
 								padding: 20,
-								boxWidth: 20,
 							},
 						},
 						scales: {
@@ -111,22 +109,22 @@ export function RPMChart(props) {
 								},
 							],
 						},
-						annotation: {
-							annotations: [
-								{
-									type: "line",
-									mode: "horizontal",
-									scaleID: "y-axis-0",
-									value: 7,
-									borderColor: "rgb(216, 52, 95)",
-									borderWidth: 4,
-									label: {
-										enabled: false,
-										content: "Threshold",
-									},
-								},
-							],
-						},
+						// annotation: {
+						// 	annotations: [
+						// 		{
+						// 			type: "line",
+						// 			mode: "horizontal",
+						// 			scaleID: "y-axis-0",
+						// 			value: 7,
+						// 			borderColor: "rgb(216, 52, 95)",
+						// 			borderWidth: 4,
+						// 			label: {
+						// 				enabled: false,
+						// 				content: "Threshold",
+						// 			},
+						// 		},
+						// 	],
+						// },
 					}}
 				/>
 			</div>
