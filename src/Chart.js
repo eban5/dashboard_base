@@ -1,12 +1,6 @@
 import React from "react";
-import { Bar, Line } from "react-chartjs-2";
-import {
-	getProblemNames,
-	getProblemNameResults,
-	generateXAxis,
-	setBkgColor,
-	setBorderColor,
-} from "./utils";
+import { Line } from "react-chartjs-2";
+import { getProblemNames, getProblemNameResults, generateXAxis, setBorderColor } from "./utils";
 import { Button } from "antd";
 
 export function RPMChart(props) {
@@ -25,7 +19,6 @@ export function RPMChart(props) {
 		title: `${problemType} Correct Results across Submissions`,
 		datasets: problemNames.map((i, key) => {
 			// get color to use for their bar fill
-			// let bkgColor = setBkgColor[key];
 			let borderColor = setBorderColor[key];
 
 			return {
@@ -109,22 +102,6 @@ export function RPMChart(props) {
 								},
 							],
 						},
-						// annotation: {
-						// 	annotations: [
-						// 		{
-						// 			type: "line",
-						// 			mode: "horizontal",
-						// 			scaleID: "y-axis-0",
-						// 			value: 7,
-						// 			borderColor: "rgb(216, 52, 95)",
-						// 			borderWidth: 4,
-						// 			label: {
-						// 				enabled: false,
-						// 				content: "Threshold",
-						// 			},
-						// 		},
-						// 	],
-						// },
 					}}
 				/>
 			</div>

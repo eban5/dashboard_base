@@ -1,3 +1,9 @@
+export function getSetNames(data) {
+	if (data.length > 0) {
+		return Object.values(Object.values(data[0]).map((set) => set.Set)).sort();
+	}
+}
+
 export function getProblemNameResults(data, problemName) {
 	let subset = data.map((item) => {
 		return Object.values(item).filter((set) => set.Set === problemName)[0];

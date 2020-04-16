@@ -1,34 +1,51 @@
 import React from "react";
 import { Table } from "antd";
-import { getProblemNames, getProblemNameResults } from "./utils";
+import { getSetNames, getProblemNames, getProblemNameResults } from "./utils";
 
-const columns = [
-	{
-		title: "Problem",
-		dataIndex: "problemName",
-		key: "problemName",
-	},
-	{
-		title: "Correct",
-		dataIndex: "correct",
-		key: "correct",
-	},
-	{
-		title: "Incorrect",
-		dataIndex: "incorrect",
-		key: "incorrect",
-	},
-];
+const generateColumns = (count) => {
+	let columns = [
+		{
+			title: "Set",
+			dataIndex: "setName",
+			key: "setName",
+		},
+	];
+
+	for (let x = 1; x <= count; x++) {
+		columns.push({
+			title: x,
+			dataIndex: x - 1,
+			key: x,
+		});
+	}
+
+	return columns;
+};
 
 export const DataTable = (props) => {
-	const { results, problemType } = props;
-
-	let problemNames = getProblemNames(results, problemType);
+	const { results } = props;
 	let chartData = [];
 
-	for (let name in problemNames) {
-		chartData.push(getProblemNameResults(results, problemNames[name]));
+	let sets = getSetNames(results);
+	let submissions = results.length;
+	const columns = generateColumns(submissions, sets);
+
+	for (let name in sets) {
+		let row = getProblemNameResults(results, sets[name]);
+
+		let rowData = {
+			key: row.problemName,
+			setName: row.problemName,
+		};
+
+		for (let x = 0; x < submissions; x++) {
+			rowData[x] = row.correct[x];
+		}
+
+		chartData.push(rowData);
 	}
+
+	console.log(chartData);
 
 	return (
 		<div>

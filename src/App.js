@@ -1,8 +1,8 @@
 import React from "react";
 // import { Avatar, UserAvatar } from "./avatar.js";
 // import { DashMenu } from "./Menu";
-import { RPMChart } from "./Chart";
-// import { DataTable } from "./Table";
+// import { RPMChart } from "./Chart";
+import { DataTable } from "./Table";
 import "antd/dist/antd.css";
 import "./App.css";
 import { results } from "./data";
@@ -31,12 +31,12 @@ function App() {
 						<h2 style={{ color: "white" }}>KBAI Project 3</h2>
 					</Header>
 					<Content style={{ margin: "0 16px" }}>
-						<RPMChart results={results} problemType={"Basic"} />
-						<RPMChart results={results} problemType={"Test"} />
-						<RPMChart results={results} problemType={"Ravens"} />
-						<RPMChart results={results} problemType={"Challenge"} />
+						{/* <RPMChart results={results} problemType={"Basic"} /> */}
+						{/* <RPMChart results={results} problemType={"Test"} /> */}
+						{/* <RPMChart results={results} problemType={"Ravens"} /> */}
+						{/* <RPMChart results={results} problemType={"Challenge"} /> */}
 
-						{/* <DataTable results={results} /> */}
+						<DataTable results={results} />
 					</Content>
 					<Footer style={{ textAlign: "center" }}>
 						Esteban Amas ©{copyrightYear}. Made with Ant Design.
