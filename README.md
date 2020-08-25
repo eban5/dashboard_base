@@ -1,3 +1,5 @@
+[![Codeship Status for eban5/dashboard_base](https://app.codeship.com/projects/d23affa0-c911-0138-bfea-3a48f0d107ce/status?branch=master)](https://app.codeship.com/projects/407085)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
